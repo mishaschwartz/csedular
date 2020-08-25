@@ -1,0 +1,18 @@
+<div class='index-header'>
+  <h3><%= t('activerecord.models.location').pluralize %></h3>
+  <% unless allowed_to?(:read_only?) %>
+    <%= button_to t('shared.new', record: t('activerecord.models.location')), new_location_path, method: :get %>
+  <% end %>
+</div>
+<table class='index-table'>
+  <tr>
+    <th><%= t('activerecord.attributes.location.name') %></th>
+    <th><%= t('activerecord.attributes.location.description') %></th>
+  </tr>
+  <% @data.each do |row| %>
+    <tr>
+      <td><%= link_to row['name'], location_path(row['id']) %></td>
+      <td><%= row['description'] %></td>
+    </tr>
+  <% end %>
+</table>

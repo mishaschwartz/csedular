@@ -1,0 +1,19 @@
+<div class='model-container'>
+  <div class='model-attributes'>
+    <span><strong><%= t('activerecord.attributes.location.name') %></strong> <%= @location.name %></span>
+    <span><strong><%= t('activerecord.attributes.location.description') %></strong> <%= @location.description %></span>
+  </div>
+  <div class='model-buttons'>
+    <% unless allowed_to?(:read_only?) || !allowed_to?(:admin?) %>
+      <div><%= button_to t('shared.edit'), edit_location_path(@location.id), method: :get %></div>
+      <div>
+        <%= form_with model: @location, method: 'DELETE', local: true do %>
+          <%= submit_tag t('shared.delete'), data: { confirm: t('views.location.show.delete_confirm') } %>
+        <% end %>
+      </div>
+    <% end %>
+  </div>
+</div>
+<% if allowed_to?(:admin?) %>
+  <%= react_component 'Calendar', @calendar_data %>
+<% end %>

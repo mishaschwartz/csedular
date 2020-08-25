@@ -1,0 +1,65 @@
+en:
+  activerecord:
+    errors:
+      models:
+        availability:
+          start_before_end: "must start before it ends"
+          overlapping_availabilities: "cannot overlap"
+        booking:
+          user_not_client: "must belong to a user with client permissions"
+          future_bookings: "cannot have more than %{limit} future bookings"
+          overlapping_bookings: "cannot overlap for a user"
+    attributes:
+      resources:
+        name: "Name"
+        type: "Type"
+      availability:
+        start_time: "Start time"
+        end_time: "End time"
+      location:
+        name: "Name"
+        description: "Description"
+      user:
+        username: "User name"
+        display_name: "Name"
+        email: "Email"
+        api_key: "Api key"
+    models:
+      location: "Location"
+      availability: "Availability"
+      resource: "Resource"
+      user: "User"
+  views:
+    users:
+      login:
+        log_in: "Log in"
+        logging_in: "Logging in"
+        password: "password"
+        invalid: "Invalid username or password"
+      show:
+        all_bookings: "All bookings"
+        reset_api_key: "Reset Api Key"
+    resource:
+      index:
+        schedule: "Schedule"
+      show:
+        booked: "Booked"
+        booked_by: "Booked by"
+        delete_confirm: "This will delete this resource as well as any associated bookings. This action cannot be undone."
+    location:
+      show:
+        delete_confirm: "This will delete this location as well as any associated resources and bookings. This action cannot be undone."
+  shared:
+    edit: 'Edit'
+    no: 'No'
+    yes: 'Yes'
+    logout: 'Logout'
+    home: 'Home'
+    created: "%{record} created"
+    new: "New %{record}"
+    delete: "Delete"
+    calendar:
+      booked_by: "Booked by"
+      resource_type: "Resource type"
+      all_records: '**All**'
+      null_records: '**None**'

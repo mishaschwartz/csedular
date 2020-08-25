@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Cseduler</title>
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+
+    <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
+    <%= yield :head %>
+  </head>
+
+  <body>
+
+    <% unless @current_user.nil? %>
+      <%= render partial: 'shared/navigation_bar' %>
+    <% end %>
+    <%= render partial: 'shared/flash_message' %>
+    <%= yield %>
+  </body>
+</html>

@@ -1,0 +1,20 @@
+<div class='index-header'>
+  <h3><%= t('activerecord.models.resource').pluralize %></h3>
+  <% unless allowed_to?(:read_only?) %>
+    <%= button_to t('shared.new', record: t('activerecord.models.resource')), new_resource_path, method: :get %>
+  <% end %>
+</div>
+<table class='index-table'>
+  <tr>
+    <th><%= t('activerecord.attributes.resources.name') %></th>
+    <th><%= t('activerecord.attributes.resources.type') %></th>
+    <th><%= t('activerecord.models.location') %></th>
+  </tr>
+  <% @data.each do |row| %>
+    <tr>
+      <td><%= link_to row['name'], resource_path(row['resources.id']) %></td>
+      <td><%= row['resource_type'] %></td>
+      <td><%= link_to row['locations.name'], location_path(row['locations.id']) %></td>
+    </tr>
+  <% end %>
+</table>

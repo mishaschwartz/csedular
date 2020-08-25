@@ -1,0 +1,23 @@
+<div class='login-form-container'>
+  <%= form_tag action: :login  do %>
+    <% username ||= '' %>
+    <%= text_field_tag 'username',
+                       nil,
+                       tabindex: 1,
+                       placeholder: User.human_attribute_name(:username),
+                       autocorrect: 'off',
+                       autocapitalize: 'off',
+                       autofocus: username == '',
+                       value: username %>
+    <%= password_field_tag 'password',
+                           nil,
+                           tabindex: 2,
+                           placeholder: t('views.users.login.password'),
+                           autofocus: username != '' %>
+    <div class='submit'>
+      <%= submit_tag t('views.users.login.log_in'),
+                     data: { disable_with: t('views.users.login.logging_in') },
+                     tabindex: 3 %>
+    </div>
+  <% end %>
+</div>

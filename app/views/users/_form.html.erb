@@ -1,0 +1,17 @@
+<%= form_with model: @user, local: true, class: 'create-update-form' do |f| %>
+  <div class='form-input'>
+    <%= f.label :username %>
+    <%= f.text_field :username %>
+  </div>
+  <div class='form-input'>
+    <%= f.label :display_name %>
+    <%= f.text_field :display_name %>
+  </div>
+  <div class='form-input'>
+    <%= f.label :email %>
+    <%= f.text_field :email %>
+  </div>
+  <div>
+    <%= submit_tag %>
+  </div>
+<% end %>

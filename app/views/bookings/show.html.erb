@@ -1,0 +1,12 @@
+<div>
+  <p>
+    <strong><%= t('activerecord.attributes.availability.start_time') %></strong>
+    <%= l(@booking.availability.start_time, format: :short) %>
+  </p>
+  <p>
+    <strong><%= t('activerecord.attributes.availability.end_time') %></strong>
+    <%= l(@booking.availability.end_time, format: :short) %>
+  </p>
+  <p><strong><%= t('activerecord.models.resource') %></strong><%= %></p>
+  <p><strong><%= t('activerecord.models.location') %></strong><%= %></p>
+</div>

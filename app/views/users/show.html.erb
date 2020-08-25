@@ -1,0 +1,27 @@
+<div class='model-container'>
+  <div class='model-attributes'>
+    <span><strong><%= t('activerecord.attributes.user.username') %></strong> <%= @user.username %></span>
+    <span><strong><%= t('activerecord.attributes.user.display_name') %></strong> <%= @user.display_name %></span>
+    <span><strong><%= t('activerecord.attributes.user.email') %></strong> <%= @user.email %></span>
+    <% if allowed_to?(:admin?) && allowed_to?(:current_user_is_user?) %>
+      <span><strong><%= t('activerecord.attributes.user.api_key') %></strong> <%= @user.api_key %></span>
+    <% end %>
+  </div>
+  <div class='model-buttons'>
+    <% if allowed_to?(:admin?) && allowed_to?(:current_user_is_user?) %>
+      <div class='list-button'>
+        <%= form_with url: reset_api_key_users_path do |_| %>
+          <%= submit_tag t('views.users.show.reset_api_key') %>
+        <% end %>
+      </div>
+    <% end %>
+    <% unless allowed_to?(:read_only?) || !allowed_to?(:admin?) %>
+      <div class='list-button'>
+        <%= button_to t('shared.edit'), edit_user_path(@user.id), method: :get %>
+      </div>
+    <% end %>
+  </div>
+</div>
+<% if @user.client %>
+  <%= react_component 'Calendar', @calendar_data %>
+<% end %>

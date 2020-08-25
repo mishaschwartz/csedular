@@ -1,0 +1,27 @@
+<div class='model-container'>
+  <div class='model-attributes'>
+    <span><strong><%= t('activerecord.attributes.resources.name') %></strong> <%= @resource.name %></span>
+    <span><strong><%= t('activerecord.attributes.resources.type') %></strong> <%= @resource.resource_type %></span>
+    <span><strong>
+      <%= t('activerecord.models.location') %></strong>
+      <%= link_to @resource.location.name, location_path(@resource.location.id) %>
+    </span>
+  </div>
+  <div class='model-buttons'>
+    <% unless allowed_to?(:read_only?) || !allowed_to?(:admin?) %>
+      <div><%= button_to t('shared.edit'), edit_resource_path(@resource.id), method: :get %></div>
+      <div>
+        <%= form_with model: @resource, method: 'DELETE', local: true do %>
+          <%= submit_tag t('shared.delete'), data: { confirm: t('views.resource.show.delete_confirm') } %>
+        <% end %>
+      </div>
+      <div>
+        <%= button_to t('shared.new', record: t('activerecord.models.availability')),
+                      new_resource_availability_path(@resource.id), method: :get %>
+      </div>
+    <% end %>
+  </div>
+</div>
+<% if allowed_to?(:admin?) %>
+  <%= react_component 'Calendar', @calendar_data %>
+<% end %>

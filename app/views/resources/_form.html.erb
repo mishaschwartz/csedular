@@ -1,0 +1,17 @@
+<%= form_with model: @resource, local: true, class: 'create-update-form' do |f| %>
+  <div class='form-input'>
+    <%= f.label :resource_type %>
+    <%= f.text_field :resource_type %>
+  </div>
+  <div class='form-input'>
+    <%= f.label :name %>
+    <%= f.text_field :name %>
+  </div>
+  <div class='form-input'>
+    <%= f.label :location %>
+    <%= f.select :location_id, options_for_select(Location.pluck(:name, :id), @resource.location&.id) %>
+  </div>
+  <div>
+    <%= submit_tag %>
+  </div>
+<% end %>
