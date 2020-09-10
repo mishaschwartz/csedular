@@ -9,6 +9,9 @@
       <li><%= link_to User.model_name.human.pluralize, users_path %></li>
       <li><%= link_to t('views.users.show.all_bookings'), bookings_path %></li>
     <% end %>
+    <% if allowed_to?(:client?) %>
+      <li><%= link_to t('shared.help'), help_bookings_path %></li>
+    <% end %>
     <% unless @current_user.nil? || Rails.configuration.remote_user_auth %>
       <li class='logout'><%= link_to t('shared.logout'), logout_users_path, method: :post %></li>
     <% end %>

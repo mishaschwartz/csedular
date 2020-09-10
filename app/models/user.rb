@@ -16,6 +16,8 @@ class User < ApplicationRecord
   end
 
   def hit_bookings_limit?
+    return false if Rails.configuration.future_bookings.nil?
+
     self.bookings.future.count >= Rails.configuration.future_bookings
   end
 

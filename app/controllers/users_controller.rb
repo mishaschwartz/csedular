@@ -8,10 +8,10 @@ class UsersController < ApplicationController
         render :login, locals: { username: login_params[:username] }
       else
         session[:user_id] = user.id
-        redirect_to action: :show, id: current_user.id
+        redirect_to root_path
       end
     else
-      redirect_to action: :show, id: current_user.id
+      redirect_to root_path
     end
   end
 
@@ -93,6 +93,6 @@ class UsersController < ApplicationController
   end
 
   def implicit_authorization_target
-    @user || User
+    @user || current_user
   end
 end

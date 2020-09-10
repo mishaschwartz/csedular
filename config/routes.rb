@@ -12,7 +12,11 @@ Rails.application.routes.draw do
       get 'all'
     end
   end
-  resources :bookings, only: [:create, :destroy, :index]
+  resources :bookings, only: [:create, :destroy, :index] do
+    collection do
+      get 'help'
+    end
+  end
   resources :users do
     member do
       put 'update_permissions'

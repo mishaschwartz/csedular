@@ -1,0 +1,23 @@
+<h2><%= t('views.bookings.help.view_bookings_title') %></h2>
+<p><%= t('views.bookings.help.view_bookings_content_html') %></p>
+
+<h2><%= t('views.bookings.help.make_booking_title') %></h2>
+<p><%= t('views.bookings.help.make_booking_content') %></p>
+<% unless Rails.configuration.future_bookings.nil? %>
+  <p><%= t('views.bookings.help.future_booking_warning_html', limit: Rails.configuration.future_bookings) %></p>
+<% end %>
+<% if Rails.configuration.booking_blackout&.nonzero? %>
+  <p>
+    <%= t('views.bookings.help.booking_blackout_warning_html',
+          blackout: (Rails.configuration.booking_blackout / 1.hour)) %>
+  </p>
+<% end %>
+
+<h2><%= t('views.bookings.help.cancel_booking_title') %></h2>
+<p><%= t('views.bookings.help.cancel_booking_content') %></p>
+<% if Rails.configuration.cancelation_blackout&.nonzero? %>
+  <p>
+    <%= t('views.bookings.help.cancel_booking_warning_html',
+          blackout: (Rails.configuration.cancelation_blackout / 1.hour)) %>
+  </p>
+<% end %>

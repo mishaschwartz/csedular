@@ -18,4 +18,8 @@ class BookingPolicy < ApplicationPolicy
       )
     )
   end
+
+  def help?
+    true
+  end
 end

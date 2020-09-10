@@ -49,6 +49,17 @@ en:
     location:
       show:
         delete_confirm: "This will delete this location as well as any associated resources and bookings. This action cannot be undone."
+    bookings:
+      help:
+        view_bookings_title: "To View Available Bookings"
+        view_bookings_content_html: "Select a range of dates from the calendar. The table to the right will show all bookings that are available between those dates (inclusive).<br/>By default this table will show bookings for all locations and all types of resources. If you wish to filter the results further, use one of the selectors (above the calendar)."
+        make_booking_title: "To Make a Booking"
+        make_booking_content: "First view available bookings for the date range you are interested in. On the table, click the \"book now\" button beside the row you would like to book."
+        future_booking_warning_html: "<strong>Warning:</strong> You are only allowed to have %{limit} future bookings at a time. If you already have reached a the limit on future bookings, you will need to wait to make another one or delete an existing booking."
+        booking_blackout_warning_html: "<strong>Warning:</strong> You cannot make a booking within %{blackout} hours of its end time."
+        cancel_booking_title: "To Cancel a Booking"
+        cancel_booking_content: "First view available bookings for the date range you are interested in. In the \"Booked by\" column, click the red X beside your username."
+        cancel_booking_warning_html: "<strong>Warning:</strong> You cannot cancel a booking within %{blackout} hours of its start time."
   shared:
     edit: 'Edit'
     no: 'No'
@@ -58,6 +69,7 @@ en:
     created: "%{record} created"
     new: "New %{record}"
     delete: "Delete"
+    help: "Help"
     calendar:
       booked_by: "Booked by"
       resource_type: "Resource type"
