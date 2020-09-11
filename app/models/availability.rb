@@ -33,7 +33,8 @@ class Availability < ApplicationRecord
                  'locations.id as location_id',
                  'users.id as user_id',
                  'users.username as username',
-                 'bookings.id as booking_id'].freeze
+                 'bookings.id as booking_id',
+                 'bookings.created_at as booking_created_time'].freeze
 
   def start_before_end
     return if self.start_time.nil? || self.end_time.nil?
