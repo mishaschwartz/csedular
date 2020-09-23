@@ -25,7 +25,11 @@ class AvailabilitiesController < ApplicationController
     availabilities = availabilities.future if params[:future]
     availabilities = availabilities.past if params[:past]
     availabilities = availabilities.current if params[:current]
-    availabilities
+    start_after = params[:start_after].nil? ? Float::INFINITY : DateTime.parse(params[:start_after])
+    start_before = params[:start_before].nil? ? Float::INFINITY : DateTime.parse(params[:start_before])
+    end_after = params[:end_after].nil? ? Float::INFINITY : DateTime.parse(params[:end_after])
+    end_before = params[:end_before].nil? ? Float::INFINITY : DateTime.parse(params[:end_before])
+    availabilities.where(start_time: start_after...start_before, end_time: end_after...end_before)
   end
 
   def create_update_params
