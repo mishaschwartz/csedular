@@ -7,6 +7,11 @@
     <%= f.label :end_time %>
     <%= f.datetime_local_field :end_time %>
   </div>
+  <div class='form-input'>
+    <%= f.label :time_zone %>
+    <%= f.time_zone_select :time_zone,
+                           ActiveSupport::TimeZone.country_zones(Rails.configuration.priority_timezone_country) %>
+  </div>
   <div>
     <%= submit_tag %>
   </div>

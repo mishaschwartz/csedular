@@ -118,4 +118,6 @@ Rails.application.configure do
   config.cancelation_blackout = 1.day
   config.booking_blackout = 1.day
   config.future_bookings = 1
+
+  config.priority_timezone_country = 'CA'  # ISO 3166-1 alpha-2 country code
 end

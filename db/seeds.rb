@@ -49,7 +49,7 @@ end
 # create availabilities
 clients.each do |client|
   rand(max=10).times.each do
-    Booking.create!(user: client, creator: client, availability: past_availabilities.delete(past_availabilities.sample))
+    Booking.create(user: client, creator: client, availability: past_availabilities.delete(past_availabilities.sample))
   end
   if [true, false].sample
     Booking.create!(user: client,

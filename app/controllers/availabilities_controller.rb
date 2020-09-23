@@ -33,7 +33,10 @@ class AvailabilitiesController < ApplicationController
   end
 
   def create_update_params
-    params.permit(:resource_id).merge(params.require(:availability).permit(:start_time, :end_time))
+    permitted = params.permit(:resource_id).merge(params.require(:availability).permit(:start_time, :end_time))
+    permitted[:start_time] = permitted[:start_time].in_time_zone(params[:availability][:time_zone])
+    permitted[:end_time] = permitted[:end_time].in_time_zone(params[:availability][:time_zone])
+    permitted
   end
 
   def set_attributes

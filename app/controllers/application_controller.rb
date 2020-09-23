@@ -131,6 +131,7 @@ class ApplicationController < ActionController::Base
     client_groups = Hash.new { |hash, key| hash[key] = [] }
     grouped_data = ActiveSupport::OrderedHash.new
     format = '%Y/%-m/%-d'
+    moment_format = 'YYYY/M/D'
     dates = []
     cancelable_ids = get_cancellable_ids
     data.each do |h|
@@ -148,7 +149,7 @@ class ApplicationController < ActionController::Base
     end
     { data: grouped_data,
       time_groups: time_groups.transform_values(&:uniq),
-      date_format: format,
+      date_format: moment_format,
       user_id: @user&.id,
       show_booking_button: allowed_to?(:see_booking_button?),
       location_groups: location_groups,

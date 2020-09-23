@@ -70,5 +70,5 @@ Rails.application.configure do
   config.future_bookings = 1
 
   config.time_zone = 'Eastern Time (US & Canada)'
-  config.active_record.default_timezone = :local
+  config.priority_timezone_country = 'CA'  # ISO 3166-1 alpha-2 country code
 end

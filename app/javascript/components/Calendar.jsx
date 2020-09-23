@@ -1,8 +1,8 @@
 import React  from 'react'
 import Calendar from 'react-calendar';
-import strftime from 'strftime'
 import Routes from '../packs/routes.js.erb';
 import Select from 'react-select';
+import moment from "moment-timezone";
 
 class BookingsCalendar extends React.Component {
 
@@ -13,9 +13,14 @@ class BookingsCalendar extends React.Component {
       selectedData: [],
       clientFilter: null,
       locationFilter: null,
-      resourceFilter: null
+      resourceFilter: null,
+      timeZone: moment.tz.guess()
     }
   }
+
+  timeZoneData = moment.tz.names().map((name) => {
+    return {value: name, label: name}
+  })
 
   componentDidMount() {
     this.setSelectedData()
@@ -24,12 +29,12 @@ class BookingsCalendar extends React.Component {
   getSelectedDateIds = () => {
     let all_ids = [];
     if (this.state.calendarDates !== null) {
-      let startDate = new Date(this.state.calendarDates[0]);
-      const endDate = new Date(this.state.calendarDates[1] || startDate);
+      let startDate = moment(this.state.calendarDates[0]);
+      const endDate = moment(this.state.calendarDates[1] || startDate);
       while (startDate <= endDate) {
-        const ids = this.props.time_groups[strftime(this.props.date_format, startDate)];
+        const ids = this.props.time_groups[startDate.format(this.props.date_format)];
         if (!!ids) { all_ids.push(...ids) }
-        startDate.setDate(startDate.getDate()+1)
+        startDate = startDate.add(1, 'days')
       }
     }
     return all_ids
@@ -73,10 +78,22 @@ class BookingsCalendar extends React.Component {
             <Calendar
               view={'month'}
               selectRange={true}
-              minDate={new Date(this.props.min_date)}
-              maxDate={new Date(this.props.max_date)}
+              minDate={moment(this.props.min_date).toDate()}
+              maxDate={moment(this.props.max_date).toDate()}
               onChange={(dates) => this.setState({calendarDates: dates}, this.setSelectedData)}
             />
+          </div>
+          <div>
+            <label>
+              <span className={'calendar-select-label'}>{'Time zone'}</span>
+              <Select
+                isSearchable={true}
+                closeMenuOnSelect={true}
+                defaultValue={{value: this.state.timeZone, label: this.state.timeZone}}
+                onChange={(val) => this.setState({timeZone: val.value})}
+                options={this.timeZoneData}
+              />
+            </label>
           </div>
         </div>
         <div className={'calendar-booking-container'}>
@@ -85,6 +102,7 @@ class BookingsCalendar extends React.Component {
             user_id={this.props.user_id}
             show_buttons={this.props.show_booking_button}
             delete_availabilities={this.props.delete_availabilities}
+            timeZone={this.state.timeZone}
           />
         </div>
       </div>
@@ -140,7 +158,7 @@ class CalendarFilter extends React.Component {
     } else {
       return (
         <label>
-          <span className={'calendar-filter-label'}>{this.props.label}</span>
+          <span className={'calendar-select-label'}>{this.props.label}</span>
           <Select
             isClearable={true}
             isSearchable={true}
@@ -157,7 +175,7 @@ class CalendarFilter extends React.Component {
   }
 }
 
-class BookingPanel extends  React.Component {
+class BookingPanel extends React.Component {
 
   columns = [
     {
@@ -175,11 +193,11 @@ class BookingPanel extends  React.Component {
     },
     {
       Header: 'Start Time',
-      Cell: (row) => { return new Date(row.start_time).toLocaleString() },
+      Cell: (row) => { return moment(row.start_time).tz(this.props.timeZone).format('MMMM Do YYYY, h:mm:ss a z') },
     },
     {
       Header: 'End Time',
-      Cell: (row) => { return new Date(row.end_time).toLocaleString() },
+      Cell: (row) => { return moment(row.end_time).tz(this.props.timeZone).format('MMMM Do YYYY, h:mm:ss a z') },
     },
     {
       Header: 'Booked by',

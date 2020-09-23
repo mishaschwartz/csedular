@@ -8,11 +8,6 @@ environment.plugins.prepend('ProvidePlugin-JQuery',
     jQuery: 'jquery/src/jquery'
   })
 );
-environment.plugins.append('ProvidePlugin-Strftime',
-  new webpack.ProvidePlugin({
-    strftime: 'strftime'
-  }),
-);
 
 const nodeModulesLoader = environment.loaders.get('nodeModules');
 if (!Array.isArray(nodeModulesLoader.exclude)) {
