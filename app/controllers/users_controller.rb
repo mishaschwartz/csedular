@@ -23,7 +23,7 @@ class UsersController < ApplicationController
   def show
     @user ||= current_user
     if @user.client
-      @calendar_data = format_calendar_data(@user.availabilities.data + Availability.future.bookable.data)
+      @calendar_data = format_calendar_data(@user.availabilities.data + Availability.bookable.data)
     end
     respond_to do |format|
       format.html

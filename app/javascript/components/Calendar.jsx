@@ -203,7 +203,7 @@ class BookingPanel extends React.Component {
       Header: 'Booked by',
       Cell: (row) => {
         if (row.user_id === null) {
-          if (this.props.user_id === null) {
+          if (this.props.user_id === null || !this.props.show_buttons) {
             return ''
           } else {
             return (
