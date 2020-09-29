@@ -21,3 +21,8 @@
           blackout: (Rails.configuration.cancelation_blackout / 1.hour)) %>
   </p>
 <% end %>
+
+<% unless Rails.configuration.help_email.nil? %>
+  <h2><%= t('views.bookings.help.contact_title') %></h2>
+  <p><%= t('views.bookings.help.contact_content', help_email: Rails.configuration.help_email) %></p>
+<% end %>

@@ -120,4 +120,6 @@ Rails.application.configure do
   config.future_bookings = 1
 
   config.priority_timezone_country = 'CA'  # ISO 3166-1 alpha-2 country code
+
+  config.help_email = 'example@example.com'
 end

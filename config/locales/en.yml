@@ -60,6 +60,8 @@ en:
         cancel_booking_title: "To Cancel a Booking"
         cancel_booking_content: "First view available bookings for the date range you are interested in. In the \"Booked by\" column, click the red X beside your username."
         cancel_booking_warning_html: "<strong>Warning:</strong> You cannot cancel a booking within %{blackout} hours of its start time."
+        contact_title: "Contact Information"
+        contact_content: "If you encounter an unexpected error, send an email to %{help_email} ."
   shared:
     edit: 'Edit'
     no: 'No'

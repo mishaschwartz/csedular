@@ -71,4 +71,6 @@ Rails.application.configure do
 
   config.time_zone = 'Eastern Time (US & Canada)'
   config.priority_timezone_country = 'CA'  # ISO 3166-1 alpha-2 country code
+
+  config.help_email = 'example@example.com'
 end
