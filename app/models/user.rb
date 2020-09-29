@@ -18,7 +18,10 @@ class User < ApplicationRecord
   def hit_bookings_limit?
     return false if Rails.configuration.future_bookings.nil?
 
-    self.bookings.future.count >= Rails.configuration.future_bookings
+    current_count = self.bookings.current.count
+    current_count -= 1 if current_count.positive? # one current booking does not count towards limit
+    future_count = self.bookings.future.count
+    current_count + future_count >= Rails.configuration.future_bookings
   end
 
   private

@@ -7,11 +7,10 @@ class Booking < ApplicationRecord
 
   validate :belongs_to_client
   validate :enforce_limit, on: :create
-  validate :no_overlapping_for_user
 
-  scope :future, -> {
-    joins(:availability).where('availabilities.start_time': Time.current..DateTime::Infinity.new)
-  }
+  scope :future, -> { where(availability_id: Availability.future.ids) }
+  scope :past, -> { where(availability_id: Availability.past.ids) }
+  scope :current, -> { where(availability_id: Availability.current.ids) }
 
   def can_cancel?
     Availability.booked.cancelable.ids.include? self.availability_id
@@ -28,18 +27,5 @@ class Booking < ApplicationRecord
   def belongs_to_client
     return if user.nil? || availability&.start_time&.<(Time.current)
     errors.add(:base, :user_not_client) unless user.client
-  end
-
-  def no_overlapping_for_user
-    return if user.nil? || availability.nil?
-
-    times = self.user
-                .bookings
-                .joins(:availability)
-                .where.not(id: self.id)
-                .pluck(:start_time, :end_time) + [[self.availability.start_time, self.availability.end_time]]
-    times = times.sort.flatten
-
-    self.errors.add(:base, :overlapping_bookings) if times != times.sort
   end
 end

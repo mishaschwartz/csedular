@@ -44,7 +44,7 @@ describe Booking do
     user = create(:client)
     create(:booking, user: user, availability: build(:availability, start_time: Time.now, end_time: Time.now + 1.hour))
     avail = build(:availability, start_time: Time.now + 30.minutes, end_time: Time.now + 2.hours)
-    expect(build(:booking, user: user, availability: avail)).not_to be_valid
+    expect(build(:booking, user: user, availability: avail)).to be_valid
   end
   it 'should allow overlapping availabilities for different user' do
     create(:booking, availability: build(:availability, start_time: Time.now, end_time: Time.now + 1.hour))

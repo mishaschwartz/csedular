@@ -43,6 +43,25 @@ describe User do
   end
 
   describe '#hit_bookings_limit?' do
+    shared_examples 'current bookings' do |one_result, two_result|
+      context 'with a current booking' do
+        it "should return #{one_result}" do
+          create(:booking, user: user,
+                 availability: build(:availability, start_time: 1.hour.ago, end_time: 1.hour.from_now))
+          expect(user.hit_bookings_limit?).to be one_result
+        end
+      end
+      context 'with two current bookings' do
+        it "should return #{two_result}" do
+          2.times do
+            create(:booking, user: user,
+                   availability: build(:availability, start_time: 1.hour.ago, end_time: 1.hour.from_now))
+          end
+          expect(user.hit_bookings_limit?).to be two_result
+        end
+      end
+    end
+
     let(:user) { build :client }
     before do
       allow(Rails.configuration).to receive(:future_bookings).and_return(5)
@@ -58,18 +77,21 @@ describe User do
       it 'should return false' do
         expect(user.hit_bookings_limit?).to be false
       end
+      it_behaves_like 'current bookings', false, true
     end
     context 'at the limit' do
       let(:count) { 3 }
       it 'should return true' do
         expect(user.hit_bookings_limit?).to be true
       end
+      it_behaves_like 'current bookings', true, true
     end
     context 'over the limit' do
       let(:count) { 4 }
       it 'should return true' do
         expect(user.hit_bookings_limit?).to be true
       end
+      it_behaves_like 'current bookings', true, true
     end
   end
 end
