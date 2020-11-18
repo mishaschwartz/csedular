@@ -14,6 +14,24 @@ describe Booking do
   it 'can belong to a non-client if it is in the past' do
     expect(build(:booking, user: build(:user, client: false))).to be_valid
   end
+  context 'uniqueness constraints' do
+    let(:clients) { create_pair(:client) }
+    let(:availabilities) { create_pair(:availability) }
+    before { create(:booking, user: clients[0], availability: availabilities[0]) }
+    it 'should permit two bookings with unique users and availabilities' do
+      expect { create(:booking, user: clients[1], availability: availabilities[1]) }.not_to raise_error
+    end
+    it 'should permit two bookings with the same user and different availabilites' do
+      expect { create(:booking, user: clients[0], availability: availabilities[1]) }.not_to raise_error
+    end
+    it 'should permit two bookings with the same availability and different users' do
+      expect { create(:booking, user: clients[1], availability: availabilities[0]) }.not_to raise_error
+    end
+    it 'should not permit two bookings with the same availability and user' do
+      booking = build(:booking, user: clients[0], availability: availabilities[0])
+      expect { booking.save }.to raise_error(ActiveRecord::RecordNotUnique)
+    end
+  end
   context 'enforcing the booking limit' do
     let(:user) { create :client }
     let(:availability) { build(:availability, start_time: 10.days.from_now, end_time: 11.days.from_now) }
